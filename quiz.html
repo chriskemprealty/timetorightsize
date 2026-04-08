@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SM7CFH30NQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-SM7CFH30NQ");
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rightsizing Readiness Quiz — Time To Rightsize</title>
+<meta name="description" content="Take the free Rightsizing Readiness Quiz — 10 questions to find out if it's time to rightsize your Utah home. From Chris Kemp, rightsizing specialist.">
+<link rel="canonical" href="https://timetorightsize.com/quiz/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F2A4A;
+    --navy-mid: #1A3D6B;
+    --blue: #2563EB;
+    --gold: #F59E0B;
+    --gold-light: #FEF3C7;
+    --green: #10B981;
+    --green-light: #D1FAE5;
+    --amber: #F59E0B;
+    --red: #EF4444;
+    --white: #FFFFFF;
+    --off-white: #F8FAFD;
+    --text: #1E293B;
+    --muted: #64748B;
+    --light: #94A3B8;
+    --border: #E2E8F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--navy);
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo { font-family: 'Lora', serif; color: white; font-size: 1rem; text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+  .nav-links a:hover { color: white; }
+
+  /* HEADER */
+  .quiz-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 56px 40px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .quiz-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .quiz-badge {
+    display: inline-block;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.4);
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .quiz-header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    color: white;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    position: relative;
+    line-height: 1.2;
+  }
+  .quiz-header h1 em { font-style: italic; color: var(--gold); }
+  .quiz-header p {
+    color: rgba(255,255,255,0.65);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 540px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+    position: relative;
+  }
+  .quiz-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    position: relative;
+  }
+  .quiz-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.82rem;
+  }
+  .quiz-meta-item span { color: var(--gold); font-size: 1rem; }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .progress-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .progress-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--gold));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-pct {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* QUIZ WRAPPER */
+  .quiz-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 36px 40px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(15,42,74,0.06);
+    display: none;
+    animation: fadeUp 0.35s ease forwards;
+  }
+  .q-card.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-category {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .q-number {
+    font-size: 0.75rem;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-family: 'Lora', serif;
+    font-size: 1.25rem;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .q-context {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: var(--off-white);
+    user-select: none;
+  }
+  .option:hover { border-color: var(--blue); background: #EFF6FF; }
+  .option.selected {
+    border-color: var(--navy);
+    background: #EFF6FF;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  }
+  .option-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.18s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .option.selected .option-dot {
+    border-color: var(--navy);
+    background: var(--navy);
+  }
+  .option.selected .option-dot::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+  .option-text { font-size: 0.92rem; color: var(--text); font-weight: 500; line-height: 1.4; }
+  .option-score { display: none; }
+
+  /* NAV BUTTONS */
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    gap: 12px;
+  }
+  .btn-back {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.87rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-back:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-next {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 13px 32px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: auto;
+  }
+  .btn-next:hover { background: var(--navy-mid); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* GATE */
+  .gate-card {
+    background: white;
+    border-radius: 16px;
+    border: 2px solid var(--gold);
+    padding: 44px 40px;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(15,42,74,0.12);
+    display: none;
+    animation: fadeUp 0.35s ease forwards;
+  }
+  .gate-card.active { display: block; }
+  .gate-icon { font-size: 3rem; margin-bottom: 16px; }
+  .gate-card h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.7rem;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .gate-teaser {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold-light);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 100px;
+    padding: 8px 20px;
+    margin: 16px 0 20px;
+  }
+  .gate-teaser-label { font-size: 0.82rem; color: #92400E; font-weight: 500; }
+  .gate-teaser-result { font-size: 0.9rem; font-weight: 700; color: #92400E; }
+  .gate-card p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0 auto 28px;
+  }
+  .gate-inputs { display: flex; flex-direction: column; gap: 10px; max-width: 380px; margin: 0 auto 12px; }
+  .gate-inp {
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--off-white);
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .gate-inp:focus { outline: none; border-color: var(--blue); }
+  .gate-inp::placeholder { color: var(--light); }
+  .gate-submit {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    display: block;
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .gate-submit:hover { background: var(--navy-mid); }
+  .gate-micro { font-size: 0.7rem; color: var(--light); margin-top: 10px; }
+
+  /* RESULTS */
+  .results-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 44px 40px;
+    box-shadow: 0 4px 24px rgba(15,42,74,0.08);
+    display: none;
+    animation: fadeUp 0.4s ease forwards;
+  }
+  .results-card.active { display: block; }
+  .result-header { text-align: center; margin-bottom: 36px; }
+  .result-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .result-badge.explorer { background: #DBEAFE; color: #1D4ED8; }
+  .result-badge.getting-close { background: #FEF3C7; color: #92400E; }
+  .result-badge.ready { background: #D1FAE5; color: #065F46; }
+
+  .result-score-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin: 20px 0;
+  }
+  .result-score-circle {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 4px solid var(--border);
+    position: relative;
+  }
+  .result-score-num {
+    font-family: 'Lora', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .result-score-num.explorer { color: var(--blue); }
+  .result-score-num.getting-close { color: var(--amber); }
+  .result-score-num.ready { color: var(--green); }
+  .result-score-label { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+
+  .result-title {
+    font-family: 'Lora', serif;
+    font-size: 1.7rem;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .result-subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .result-breakdown {
+    margin: 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .result-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--off-white);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .result-section-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .result-section-info { flex: 1; }
+  .result-section-name { font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .result-section-bar-track {
+    height: 6px; background: var(--border); border-radius: 100px; overflow: hidden;
+  }
+  .result-section-bar-fill {
+    height: 100%; border-radius: 100px;
+    transition: width 0.8s ease;
+  }
+  .result-section-score { font-size: 0.8rem; font-weight: 600; color: var(--muted); flex-shrink: 0; min-width: 36px; text-align: right; }
+
+  .result-next {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-top: 32px;
+    text-align: center;
+  }
+  .result-next h3 { font-family: 'Lora', serif; color: white; font-size: 1.2rem; margin-bottom: 8px; }
+  .result-next p { color: rgba(255,255,255,0.7); font-size: 0.88rem; line-height: 1.6; margin-bottom: 20px; }
+  .result-next-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary-gold {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .btn-primary-gold:hover { background: #FBBF24; }
+  .btn-outline-white {
+    background: transparent;
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s;
+  }
+  .btn-outline-white:hover { border-color: white; }
+
+  .retake-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .retake-link a { color: var(--blue); text-decoration: none; cursor: pointer; }
+
+  /* FOOTER */
+  .quiz-footer {
+    background: var(--navy);
+    padding: 28px 40px;
+    text-align: center;
+    margin-top: 40px;
+  }
+  .quiz-footer p { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+  .quiz-footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .q-card, .gate-card, .results-card { padding: 28px 22px; }
+    .nav { padding: 14px 20px; }
+    .quiz-header { padding: 40px 20px 48px; }
+    .quiz-meta { flex-wrap: wrap; gap: 16px; }
+    .progress-wrap { padding: 14px 20px; }
+    .result-next-btns { flex-direction: column; }
+    .btn-primary-gold, .btn-outline-white { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">Time To <span>Rightsize</span></a>
+  <div class="nav-links">
+    <a href="/">← Back to Home</a>
+    <a href="/calculator/">Free Calculator</a>
+    <a href="https://www.youtube.com/@retiresmartlivehappy" target="_blank">YouTube ↗</a>
+  </div>
+</nav>
+
+<div class="quiz-header">
+  <div class="quiz-badge">Free Self-Assessment</div>
+  <h1>Are You <em>Ready</em> to Rightsize?</h1>
+  <p>10 honest questions that will show you exactly where you stand — and what to think about next.</p>
+  <div class="quiz-meta">
+    <div class="quiz-meta-item"><span>⏱</span> About 3 minutes</div>
+    <div class="quiz-meta-item"><span>📋</span> 10 questions</div>
+    <div class="quiz-meta-item"><span>🔒</span> Completely private</div>
+  </div>
+</div>
+
+<div class="progress-wrap" id="progress-wrap" style="display:none;">
+  <div class="progress-inner">
+    <span class="progress-label" id="progress-label">Question 1 of 10</span>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+    <span class="progress-pct" id="progress-pct">0%</span>
+  </div>
+</div>
+
+<div class="quiz-wrap">
+
+  <!-- START CARD -->
+  <div class="q-card active" id="start-card">
+    <div class="q-category">Welcome</div>
+    <div class="q-text" style="font-size:1.4rem;margin-bottom:12px;">This quiz isn't a test — there are no wrong answers.</div>
+    <p style="font-size:0.93rem;color:var(--muted);line-height:1.7;margin-bottom:24px;">It's a quick way to get clear on where you actually stand across five areas: finances, health, your home, lifestyle, and legal planning. Most people find that some areas are further along than they thought — and a couple need more attention.</p>
+    <p style="font-size:0.93rem;color:var(--muted);line-height:1.7;margin-bottom:32px;">Answer honestly. You'll get a personalized score and some practical next steps at the end.</p>
+    <button class="btn-next" onclick="startQuiz()" style="margin:0;">Let's Get Started →</button>
+  </div>
+
+  <!-- QUESTIONS -->
+  <!-- Q1 -->
+  <div class="q-card" id="q1" data-section="finances" data-section-label="💰 Finances">
+    <div class="q-category">💰 Finances</div>
+    <div class="q-number">Question 1 of 10</div>
+    <div class="q-text">Do you have a clear picture of what your monthly income will look like in retirement?</div>
+    <div class="q-context">Think Social Security, any pension, investment withdrawals, rental income, or part-time work. The goal isn't perfection — it's knowing roughly what's coming in.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — I know my numbers and feel confident about them</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — I have a rough idea but haven't nailed down the details</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not really — I know I should figure this out but haven't yet</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — this is the part that worries me most</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()" style="visibility:hidden;">← Back</button>
+      <button class="btn-next" id="next-1" disabled onclick="nextQuestion(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2" data-section="finances" data-section-label="💰 Finances">
+    <div class="q-category">💰 Finances</div>
+    <div class="q-number">Question 2 of 10</div>
+    <div class="q-text">Are you on track to be debt-free — or close to it — when you make this move?</div>
+    <div class="q-context">High-interest debt like credit cards can put real pressure on a fixed income. A paid-off or nearly paid-off mortgage going into retirement is one of the best financial positions you can be in.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — I'm debt-free or will be very close to it</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — manageable debt with a clear payoff plan</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Working on it — it's more than I'd like but I'm making progress</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not yet — debt is a real concern for me right now</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-2" disabled onclick="nextQuestion(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3" data-section="health" data-section-label="❤️ Health">
+    <div class="q-category">❤️ Health & Wellness</div>
+    <div class="q-number">Question 3 of 10</div>
+    <div class="q-text">Do you have health insurance coverage figured out for retirement?</div>
+    <div class="q-context">For most people, this means Medicare starting at 65 — possibly with a supplement plan. If you're retiring before 65, the gap between your employer coverage ending and Medicare beginning needs a plan. Healthcare is often the biggest surprise expense in retirement.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — Medicare and/or supplements are sorted out</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — I understand my options and have a general plan</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Somewhat — I know I need to deal with this but haven't yet</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not yet — this is a gap I need to address</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-3" disabled onclick="nextQuestion(4)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4" data-section="health" data-section-label="❤️ Health">
+    <div class="q-category">❤️ Health & Wellness</div>
+    <div class="q-number">Question 4 of 10</div>
+    <div class="q-text">Have you thought about what you'd need if your mobility or independence changed down the road?</div>
+    <div class="q-context">This one's easy to skip because nobody likes thinking about it. But the couples who navigate this best are the ones who had the conversation before they needed to — about care preferences, who's involved, and what "aging well" looks like for them.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — we've talked about it and have a general plan</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Somewhat — we've touched on it but haven't gone deep</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not really — it's on the list but we keep putting it off</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — we haven't gone there yet</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-4" disabled onclick="nextQuestion(5)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5" data-section="home" data-section-label="🏠 Your Home">
+    <div class="q-category">🏠 Your Current Home</div>
+    <div class="q-number">Question 5 of 10</div>
+    <div class="q-text">Is your current home realistically set up for the next 10-20 years of your life?</div>
+    <div class="q-context">Think about stairs, maintenance demands, how many rooms you actually use, and what happens if one of you has a health issue. A lot of people love their home but quietly know it's not the forever answer.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — it works well and I can see us here long-term</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — with some modifications it could work</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not really — it's starting to feel like more than we need or can manage</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — we know this house isn't the right long-term fit</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-5" disabled onclick="nextQuestion(6)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6" data-section="home" data-section-label="🏠 Your Home">
+    <div class="q-category">🏠 Your Current Home</div>
+    <div class="q-number">Question 6 of 10</div>
+    <div class="q-text">Have you thought seriously about where you'd want to live next?</div>
+    <div class="q-context">Not necessarily a specific address — but a direction. Closer to family? A 55+ community? A smaller town? A different state? People who've given this real thought tend to make much better moves than those who decide in a hurry.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — I have a clear idea of what I want and where</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Somewhat — I have a general direction but haven't gotten specific</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not really — I know what I don't want more than what I do</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — I haven't gotten that far in my thinking yet</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-6" disabled onclick="nextQuestion(7)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7" data-section="lifestyle" data-section-label="🌟 Lifestyle">
+    <div class="q-category">🌟 Lifestyle & Purpose</div>
+    <div class="q-number">Question 7 of 10</div>
+    <div class="q-text">Do you have a clear sense of what you're moving toward — not just what you're leaving behind?</div>
+    <div class="q-context">This is the question most people skip. The best moves happen when people have a vision of what the next chapter looks like — hobbies, travel, volunteering, family time, community. When you're just "getting out," it's easy to land somewhere that doesn't really fit either.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — I have a genuine vision for what I want this next chapter to look like</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Somewhat — I have ideas but haven't gotten really clear on it</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not yet — I mostly know what I want less of, not more of</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — I'm still figuring out what retirement even looks like for me</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-7" disabled onclick="nextQuestion(8)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8" data-section="lifestyle" data-section-label="🌟 Lifestyle">
+    <div class="q-category">🌟 Lifestyle & Purpose</div>
+    <div class="q-number">Question 8 of 10</div>
+    <div class="q-text">Are your close relationships — family, friends, community — set up to support this transition?</div>
+    <div class="q-context">People often underestimate how much the social side of retirement matters. Work provides structure, identity, and connection. When that goes away, what fills it? And are the people in your corner aligned with your plan?</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — I have strong connections and people who support this direction</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — good relationships but could be stronger in some areas</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Somewhat — I have some concerns about isolation or family alignment</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not really — this is an area I need to work on</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-8" disabled onclick="nextQuestion(9)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9" data-section="legal" data-section-label="📄 Legal">
+    <div class="q-category">📄 Legal & Planning</div>
+    <div class="q-number">Question 9 of 10</div>
+    <div class="q-text">Do you have the basic legal documents in place — will, power of attorney, healthcare directive?</div>
+    <div class="q-context">These aren't fun to think about but they're genuinely important. Without them, your family is left making difficult decisions without guidance — often under stress and time pressure. Getting these done is one of the best gifts you can give to the people you love.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — everything is up to date and current</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — some documents in place but need updating</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Partially — I have a will but the other pieces are missing</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — this is on the to-do list but hasn't happened yet</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-9" disabled onclick="nextQuestion(10)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10" data-section="legal" data-section-label="📄 Legal">
+    <div class="q-category">📄 Legal & Planning</div>
+    <div class="q-number">Question 10 of 10</div>
+    <div class="q-text">Have you had an honest conversation with your spouse, partner, or family about your plans and timeline?</div>
+    <div class="q-context">You'd be surprised how many people are planning a move that their partner hasn't fully agreed to — or vice versa. Getting aligned on the "what, where, and when" before you start looking at houses makes everything easier.</div>
+    <div class="options">
+      <div class="option" data-score="4" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Yes — we're fully aligned and on the same page</div></div>
+      <div class="option" data-score="3" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Mostly — we've talked but there are still some things to work through</div></div>
+      <div class="option" data-score="1" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">Not really — we've mentioned it but haven't had a real conversation</div></div>
+      <div class="option" data-score="0" onclick="selectOption(this)"><div class="option-dot"></div><div class="option-text">No — this is just my thinking so far</div></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="next-10" disabled onclick="showGate()">See My Results →</button>
+    </div>
+  </div>
+
+  <!-- EMAIL GATE -->
+  <div class="gate-card" id="gate-card">
+    <div class="gate-icon">🎉</div>
+    <h2>Your results are ready!</h2>
+    <div class="gate-teaser">
+      <span class="gate-teaser-label">Your result category:</span>
+      <span class="gate-teaser-result" id="gate-teaser-text">Loading...</span>
+    </div>
+    <p>Enter your email to unlock your full personalized results — including your score breakdown by category and specific next steps based on where you stand.</p>
+    <div class="gate-inputs">
+      <input type="text" class="gate-inp" id="gate-name" placeholder="Your first name">
+      <input type="email" class="gate-inp" id="gate-email" placeholder="Your email address">
+    </div>
+    <button class="gate-submit" onclick="unlockResults()">Unlock My Results →</button>
+    <p class="gate-micro">🔒 No spam. Unsubscribe anytime. Your answers are completely private.</p>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-card" id="results-card">
+    <div class="result-header">
+      <div class="result-badge" id="result-badge"></div>
+      <div class="result-score-wrap">
+        <div class="result-score-circle">
+          <div class="result-score-num" id="result-score-num"></div>
+          <div class="result-score-label">out of 40</div>
+        </div>
+      </div>
+      <div class="result-title" id="result-title"></div>
+      <div class="result-subtitle" id="result-subtitle"></div>
+    </div>
+
+    <div class="result-breakdown" id="result-breakdown"></div>
+
+    <div class="result-next" id="result-next"></div>
+
+    <div class="retake-link">
+      Want to retake the quiz? <a onclick="retake()">Start over</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="quiz-footer">
+  <p>Chris Kemp · Utah's Rightsizing Specialist · <a href="tel:8014201378">801-420-1378</a> · <a href="/cdn-cgi/l/email-protection#d6bfb8b0b996a2bfbbb3a2b9a4bfb1bea2a5bfacb3f8b5b9bb"><span class="__cf_email__" data-cfemail="7d14131b123d0914101809120f141a15090e140718531e1210">[email&#160;protected]</span></a> · <a href="/">timetorightsize.com</a></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  let currentQ = 0;
+  let scores = {};
+  let sectionScores = {};
+  let totalScore = 0;
+
+  const sections = {
+    finances: { label: '💰 Finances', color: '#2563EB', max: 8 },
+    health:   { label: '❤️ Health & Wellness', color: '#EF4444', max: 8 },
+    home:     { label: '🏠 Your Home', color: '#10B981', max: 8 },
+    lifestyle:{ label: '🌟 Lifestyle & Purpose', color: '#F59E0B', max: 8 },
+    legal:    { label: '📄 Legal & Planning', color: '#8B5CF6', max: 8 },
+  };
+
+  const qSections = {
+    1:'finances', 2:'finances',
+    3:'health',   4:'health',
+    5:'home',     6:'home',
+    7:'lifestyle',8:'lifestyle',
+    9:'legal',   10:'legal'
+  };
+
+  function startQuiz() {
+    document.getElementById('start-card').classList.remove('active');
+    document.getElementById('progress-wrap').style.display = 'block';
+    showQuestion(1);
+  }
+
+  function showQuestion(n) {
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('active'));
+    const card = document.getElementById('q' + n);
+    if (card) {
+      card.classList.add('active');
+      currentQ = n;
+      updateProgress(n);
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function updateProgress(n) {
+    const pct = Math.round(((n - 1) / 10) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('progress-label').textContent = `Question ${n} of 10`;
+  }
+
+  function selectOption(el) {
+    const card = el.closest('.q-card');
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const qNum = card.id.replace('q', '');
+    const nextBtn = document.getElementById('next-' + qNum);
+    if (nextBtn) nextBtn.disabled = false;
+    scores[qNum] = parseInt(el.dataset.score);
+  }
+
+  function nextQuestion(n) {
+    showQuestion(n);
+  }
+
+  function goBack() {
+    if (currentQ > 1) showQuestion(currentQ - 1);
+  }
+
+  function showGate() {
+    // Calculate totals
+    totalScore = 0;
+    sectionScores = { finances: 0, health: 0, home: 0, lifestyle: 0, legal: 0 };
+    for (let i = 1; i <= 10; i++) {
+      const s = scores[i] || 0;
+      totalScore += s;
+      const sec = qSections[i];
+      sectionScores[sec] += s;
+    }
+
+    // Determine bucket
+    let bucket;
+    if (totalScore <= 14) bucket = 'explorer';
+    else if (totalScore <= 26) bucket = 'getting-close';
+    else bucket = 'ready';
+
+    const labels = {
+      'explorer': 'Early Explorer',
+      'getting-close': 'Getting Close',
+      'ready': 'Ready to Move'
+    };
+
+    document.getElementById('gate-teaser-text').textContent = labels[bucket];
+
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('active'));
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('gate-card').classList.add('active');
+    document.getElementById('gate-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function unlockResults() {
+    const name = document.getElementById('gate-name').value.trim();
+    const email = document.getElementById('gate-email').value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const btn = document.querySelector('.gate-submit');
+    btn.textContent = 'Loading...';
+    btn.disabled = true;
+
+    // Submit to MailerLite
+    try {
+      const fd = new FormData();
+      fd.append('fields[email]', email);
+      if (name) fd.append('fields[name]', name);
+      fd.append('ml-submit', '1');
+      fd.append('anticsrf', 'true');
+      await fetch('https://assets.mailerlite.com/jsonp/2181458/forms/181657269877867528/subscribe', {
+        method: 'POST', body: fd, mode: 'no-cors'
+      });
+    } catch(e) {}
+
+    // Show results
+    document.getElementById('gate-card').classList.remove('active');
+    buildResults(name);
+    document.getElementById('results-card').classList.add('active');
+    document.getElementById('results-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function buildResults(name) {
+    let bucket, badgeClass, scoreColor;
+    if (totalScore <= 14) { bucket = 'explorer'; badgeClass = 'explorer'; scoreColor = '#2563EB'; }
+    else if (totalScore <= 26) { bucket = 'getting-close'; badgeClass = 'getting-close'; scoreColor = '#F59E0B'; }
+    else { bucket = 'ready'; badgeClass = 'ready'; scoreColor = '#10B981'; }
+
+    const firstName = name ? name.split(' ')[0] : '';
+
+    const results = {
+      'explorer': {
+        badge: '🌱 Early Explorer',
+        title: firstName ? `${firstName}, you're in a great place to start planning.` : `You're in a great place to start planning.`,
+        subtitle: `Your score suggests you're in the earlier stages of thinking about this — and that's completely okay. The people who navigate retirement transitions best are the ones who started educating themselves well before they needed to. You're doing that right now.`,
+        next: {
+          heading: `The best next step for Early Explorers`,
+          body: `Focus on the areas that scored lowest first — usually finances and legal planning. You don't need to figure everything out at once. Start with one conversation: with a financial advisor, your spouse, or just an honest look at your budget. The checklist I sent you is a great place to begin.`,
+          cta1: { text: 'Try the Free Calculator', url: 'calculator.html' },
+          cta2: { text: 'Watch on YouTube', url: 'https://www.youtube.com/@retiresmartlivehappy' }
+        }
+      },
+      'getting-close': {
+        badge: '📈 Getting Close',
+        title: firstName ? `${firstName}, you're further along than most people.` : `You're further along than most people.`,
+        subtitle: `Your score shows real progress across most areas. You've thought about this, done some planning, and have a general direction. The work now is tightening up the gaps — the one or two areas that scored lower are worth focused attention before you start making moves.`,
+        next: {
+          heading: `The best next step for people Getting Close`,
+          body: `Look at your lowest-scoring sections and ask: what would it take to move those from "somewhat" to "yes"? For most people at this stage, a conversation with a real estate professional about timing and market conditions is a valuable next step. I'm happy to be that conversation — no pressure, just information.`,
+          cta1: { text: 'Call or Text Chris: 801-420-1378', url: 'tel:8014201378' },
+          cta2: { text: 'Try the Free Calculator', url: 'calculator.html' }
+        }
+      },
+      'ready': {
+        badge: '✅ Ready to Move',
+        title: firstName ? `${firstName}, you've done the work — you're ready.` : `You've done the work — you're ready.`,
+        subtitle: `Your score puts you in a strong position across the board. You've thought about your finances, your health, your home, and your next chapter. The question now isn't whether you're ready — it's how to execute this well so you end up exactly where you want to be.`,
+        next: {
+          heading: `The best next step for people who are Ready`,
+          body: `At this stage, the most valuable thing you can do is have a real conversation with someone who knows the Utah market and specializes in exactly this kind of move. That's what I do. I'd love to learn about your situation and help you think through the options — completely no-obligation.`,
+          cta1: { text: 'Call or Text Chris: 801-420-1378', url: 'tel:8014201378' },
+          cta2: { text: 'Email Chris Directly', url: 'mailto:info@timetorightsize.com' }
+        }
+      }
+    };
+
+    const r = results[bucket];
+
+    // Badge
+    const badge = document.getElementById('result-badge');
+    badge.textContent = r.badge;
+    badge.className = 'result-badge ' + badgeClass;
+
+    // Score
+    const scoreEl = document.getElementById('result-score-num');
+    scoreEl.textContent = totalScore;
+    scoreEl.className = 'result-score-num ' + badgeClass;
+
+    document.getElementById('result-title').textContent = r.title;
+    document.getElementById('result-subtitle').textContent = r.subtitle;
+
+    // Section breakdown
+    const breakdown = document.getElementById('result-breakdown');
+    breakdown.innerHTML = '<div style="font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:12px;">Your score by category:</div>';
+    Object.entries(sections).forEach(([key, sec]) => {
+      const s = sectionScores[key] || 0;
+      const pct = Math.round((s / sec.max) * 100);
+      breakdown.innerHTML += `
+        <div class="result-section">
+          <div class="result-section-icon">${sec.label.split(' ')[0]}</div>
+          <div class="result-section-info">
+            <div class="result-section-name">${sec.label.replace(/^[^\s]+\s/, '')}</div>
+            <div class="result-section-bar-track">
+              <div class="result-section-bar-fill" style="width:${pct}%;background:${sec.color};"></div>
+            </div>
+          </div>
+          <div class="result-section-score">${s}/${sec.max}</div>
+        </div>`;
+    });
+
+    // Next steps
+    const next = r.next;
+    document.getElementById('result-next').innerHTML = `
+      <h3>${next.heading}</h3>
+      <p>${next.body}</p>
+      <div class="result-next-btns">
+        <a href="${next.cta1.url}" class="btn-primary-gold">${next.cta1.text}</a>
+        <a href="${next.cta2.url}" target="_blank" class="btn-outline-white">${next.cta2.text}</a>
+      </div>`;
+  }
+
+  function retake() {
+    scores = {}; sectionScores = {}; totalScore = 0; currentQ = 0;
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+    document.getElementById('results-card').classList.remove('active');
+    document.getElementById('gate-c

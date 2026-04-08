@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rightsizing Savings Calculator — Time To Rightsize</title>
+<meta name="description" content="See how much you could save by rightsizing your home. Enter your current home details and get an instant savings estimate from Chris Kemp, Utah rightsizing specialist.">
+<link rel="canonical" href="https://timetorightsize.com/rightsizing-savings-calculator/">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SM7CFH30NQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-SM7CFH30NQ");
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F2A4A;
+    --navy-mid: #1A3D6B;
+    --gold: #F59E0B;
+    --gold-light: rgba(245,158,11,0.12);
+    --green: #10B981;
+    --green-light: #D1FAE5;
+    --blue: #2563EB;
+    --sky: #EFF6FF;
+    --sky-mid: #DBEAFE;
+    --white: #FFFFFF;
+    --off-white: #F8FAFD;
+    --text: #1E293B;
+    --muted: #64748B;
+    --light: #94A3B8;
+    --border: #E2E8F0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .page-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 48px 40px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content:'';
+    position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .back-link {
+    position: absolute; top: 20px; left: 28px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: white; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-light);
+    border: 1px solid rgba(245,158,11,0.35);
+    color: var(--gold);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .page-header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.9rem, 3vw, 2.8rem);
+    color: white;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    line-height: 1.15;
+    position: relative;
+  }
+  .page-header h1 em { font-style: italic; color: var(--gold); }
+  .page-header p {
+    color: rgba(255,255,255,0.65);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  /* WRAPPER */
+  .wrapper {
+    max-width: 980px;
+    margin: -32px auto 60px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 24px rgba(15,42,74,0.08);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .card-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .card-icon {
+    width: 36px; height: 36px;
+    background: var(--sky-mid);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .card-header h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+  }
+  .card-header p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .card-body { padding: 24px 28px; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  @media (max-width: 640px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .card-body { padding: 18px; }
+    .card-header { padding: 16px 18px 14px; }
+    .page-header { padding: 40px 20px 56px; }
+  }
+
+  /* FORM FIELDS */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .field-hint { font-size: 0.72rem; color: var(--muted); margin-top: -2px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .input-wrap { position: relative; }
+  .input-prefix, .input-suffix {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    font-size: 0.88rem; color: var(--muted); font-weight: 500;
+    pointer-events: none;
+  }
+  .input-prefix { left: 12px; }
+  .input-suffix { right: 12px; }
+  input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input:focus { border-color: var(--blue); }
+  .has-prefix input { padding-left: 26px; }
+  .has-suffix input { padding-right: 36px; }
+
+  /* RANGE SLIDER */
+  .range-wrap { display: flex; flex-direction: column; gap: 6px; }
+  .range-wrap label {
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--navy); letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .range-row { display: flex; align-items: center; gap: 12px; }
+  input[type="range"] {
+    flex: 1; height: 4px; appearance: none;
+    background: var(--border); border-radius: 2px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none; width: 18px; height: 18px;
+    background: var(--navy); border-radius: 50%;
+    cursor: pointer; border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .range-val {
+    min-width: 52px; text-align: right;
+    font-size: 0.88rem; font-weight: 600; color: var(--navy);
+  }
+
+  /* CALC BUTTON */
+  .calc-btn {
+    width: 100%; padding: 15px;
+    background: var(--navy);
+    color: white; border: none; border-radius: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .calc-btn:hover { background: var(--navy-mid); }
+
+  /* RESULTS */
+  .results { display: none; }
+  .results.show { display: block; }
+
+  .results-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 8px;
+    padding: 32px 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .results-hero::before {
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .results-hero .label {
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 8px; position: relative;
+  }
+  .results-hero .big-num {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    color: var(--gold);
+    font-weight: 600;
+    line-height: 1;
+    position: relative;
+  }
+  .results-hero .sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    margin-top: 8px;
+    position: relative;
+  }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  @media (max-width: 580px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+
+  .stat-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .stat-box .stat-label {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .stat-box .stat-val {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem; font-weight: 600;
+    color: var(--navy); line-height: 1;
+  }
+  .stat-box .stat-val.green { color: var(--green); }
+  .stat-box .stat-note {
+    font-size: 0.7rem; color: var(--muted); margin-top: 4px;
+  }
+
+  .breakdown-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .breakdown-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); background: var(--off-white);
+    border-bottom: 1px solid var(--border);
+  }
+  .breakdown-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .breakdown-table tr:last-child td { border-bottom: none; }
+  .breakdown-table td:last-child { text-align: right; font-weight: 600; }
+  .breakdown-table .savings { color: var(--green); }
+  .breakdown-table .total-row td {
+    font-weight: 700; background: var(--sky);
+    color: var(--navy); font-size: 0.95rem;
+  }
+
+  /* CTA */
+  .cta-box {
+    background: linear-gradient(135deg, var(--gold-light), rgba(245,158,11,0.06));
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px;
+    padding: 28px;
+    text-align: center;
+  }
+  .cta-box h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem; color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .cta-box p { font-size: 0.88rem; color: var(--muted); margin-bottom: 18px; line-height: 1.6; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--navy); color: white;
+    padding: 13px 28px; border-radius: 5px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 600;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .cta-btn:hover { background: var(--navy-mid); }
+
+  .divider { height: 1px; background: var(--border); margin: 22px 0; }
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 1rem; color: var(--navy);
+    margin-bottom: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="/" class="back-link">← Back to Home</a>
+  <div class="badge">✦ Free Calculator</div>
+  <h1>How Much Could You Save<br>by <em>Rightsizing</em>?</h1>
+  <p>Enter your current home details and we'll show you your estimated monthly and annual savings — plus what you could put in your pocket at closing.</p>
+</div>
+
+<div class="wrapper">
+
+  <!-- CURRENT HOME -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🏠</div>
+      <div>
+        <h2>Your Current Home</h2>
+        <p>Tell us about the home you're in now</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2" style="margin-bottom:18px">
+        <div class="field">
+          <label>Current Home Value <span class="field-hint">(your estimate)</span></label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentValue" placeholder="650,000" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>Remaining Mortgage Balance</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentMortgage" placeholder="180,000" value="">
+          </div>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-bottom:18px">
+        <div class="field">
+          <label>Monthly Mortgage Payment</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentPayment" placeholder="2,400" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>Monthly HOA / Fees</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentHOA" placeholder="0" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Annual Property Taxes</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentTaxes" placeholder="3,200" value="">
+          </div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Monthly Utilities</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentUtilities" placeholder="280" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>Annual Maintenance</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="currentMaintenance" placeholder="4,000" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>Home Size (sq ft)</label>
+          <div class="input-wrap">
+            <input type="number" id="currentSqft" placeholder="2,800" value="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW HOME -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🔑</div>
+      <div>
+        <h2>Your Rightsized Home</h2>
+        <p>What you're moving into — actual or estimated</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2" style="margin-bottom:18px">
+        <div class="field">
+          <label>New Home Purchase Price</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newValue" placeholder="420,000" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>Down Payment</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newDown" placeholder="200,000" value="">
+          </div>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-bottom:18px">
+        <div class="field">
+          <label>New Monthly Payment</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newPayment" placeholder="1,400" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>New HOA / Fees</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newHOA" placeholder="0" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>New Annual Property Taxes</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newTaxes" placeholder="2,100" value="">
+          </div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>New Monthly Utilities</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newUtilities" placeholder="160" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>New Annual Maintenance</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newMaintenance" placeholder="1,800" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label>New Home Size (sq ft)</label>
+          <div class="input-wrap">
+            <input type="number" id="newSqft" placeholder="1,600" value="">
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="range-wrap">
+        <label>Selling Costs (agent, closing, etc.) <span class="field-hint" style="text-transform:none;letter-spacing:0;font-weight:400"> — typically 6–8%</span></label>
+        <div class="range-row">
+          <input type="range" id="sellingCosts" min="4" max="10" step="0.5" value="7" oninput="document.getElementById('sellingCostsVal').textContent=this.value+'%'">
+          <span class="range-val" id="sellingCostsVal">7%</span>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">Calculate My Rightsizing Savings →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <div class="results-hero">
+      <div class="label">Your Estimated Annual Savings</div>
+      <div class="big-num" id="annualSavings">$0</div>
+      <div class="sub" id="monthlySavingsSub">$0/month freed up for retirement, travel, and life</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-label">Cash at Closing</div>
+        <div class="stat-val green" id="cashAtClosing">$0</div>
+        <div class="stat-note">equity released</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Monthly Savings</div>
+        <div class="stat-val green" id="monthlySavings">$0</div>
+        <div class="stat-note">every month</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">5-Year Total Savings</div>
+        <div class="stat-val" id="fiveYearSavings">$0</div>
+        <div class="stat-note">housing cost reduction</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Size Reduction</div>
+        <div class="stat-val" id="sizeReduction">—</div>
+        <div class="stat-note">less to heat, clean & maintain</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Payment Drop</div>
+        <div class="stat-val green" id="paymentDrop">$0</div>
+        <div class="stat-note">lower monthly payment</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Utility Savings</div>
+        <div class="stat-val" id="utilitySavings">$0</div>
+        <div class="stat-note">per year</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📊</div>
+        <div><h2>Full Cost Breakdown</h2><p>Where your savings come from each year</p></div>
+      </div>
+      <div class="card-body" style="padding:0">
+        <table class="breakdown-table">
+          <thead>
+            <tr>
+              <th>Cost Category</th>
+              <th>Current Home</th>
+              <th>New Home</th>
+              <th>Annual Savings</th>
+            </tr>
+          </thead>
+          <tbody id="breakdownBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h3>Ready to See What Your Home Is Worth?</h3>
+      <p>Get a free, no-pressure home valuation from Chris Kemp — Utah's rightsizing specialist with 1,000+ homes sold and 30+ years of experience.</p>
+      <a href="/" class="cta-btn">Get My Free Home Value →</a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function fmt(n) {
+  if (isNaN(n) || n === null) return '$0';
+  return '$' + Math.round(n).toLocaleString();
+}
+function pct(n) {
+  if (isNaN(n) || n === null) return '—';
+  return Math.round(n) + '%';
+}
+
+function val(id) {
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function calculate() {
+  // Current costs (annualized)
+  const curPayment    = val('currentPayment') * 12;
+  const curHOA        = val('currentHOA') * 12;
+  const curTaxes      = val('currentTaxes');
+  const curUtilities  = val('currentUtilities') * 12;
+  const curMaint      = val('currentMaintenance');
+  const curTotal      = curPayment + curHOA + curTaxes + curUtilities + curMaint;
+
+  // New costs (annualized)
+  const newPayment    = val('newPayment') * 12;
+  const newHOA        = val('newHOA') * 12;
+  const newTaxes      = val('newTaxes');
+  const newUtilities  = val('newUtilities') * 12;
+  const newMaint      = val('newMaintenance');
+  const newTotal      = newPayment + newHOA + newTaxes + newUtilities + newMaint;
+
+  // Equity / cash at closing
+  const curValue      = val('currentValue');
+  const curMortgage   = val('currentMortgage');
+  const sellingPct    = parseFloat(document.getElementById('sellingCosts').value) / 100;
+  const sellingCosts  = curValue * sellingPct;
+  const netProceeds   = curValue - curMortgage - sellingCosts;
+  const newDown       = val('newDown');
+  const cashAtClosing = netProceeds - newDown;
+
+  // Savings
+  const annualSavings   = curTotal - newTotal;
+  const monthlySavings  = annualSavings / 12;
+  const fiveYear        = annualSavings * 5;
+
+  // Size
+  const curSqft = val('currentSqft');
+  const newSqft = val('newSqft');
+  const sqftDiff = curSqft && newSqft ? Math.round((1 - newSqft/curSqft)*100) : null;
+
+  // Display
+  document.getElementById('annualSavings').textContent = fmt(annualSavings);
+  document.getElementById('monthlySavingsSub').textContent = fmt(monthlySavings) + '/month freed up for retirement, travel, and life';
+  document.getElementById('cashAtClosing').textContent = fmt(Math.max(0, cashAtClosing));
+  document.getElementById('monthlySavings').textContent = fmt(monthlySavings);
+  document.getElementById('fiveYearSavings').textContent = fmt(fiveYear);
+  document.getElementById('sizeReduction').textContent = sqftDiff !== null ? sqftDiff + '%' : '—';
+  document.getElementById('paymentDrop').textContent = fmt((val('currentPayment') - val('newPayment')));
+  document.getElementById('utilitySavings').textContent = fmt((val('currentUtilities') - val('newUtilities')) * 12);
+
+  // Breakdown table
+  const rows = [
+    ['Mortgage / Rent', curPayment, newPayment],
+    ['HOA / Fees', curHOA, newHOA],
+    ['Property Taxes', curTaxes, newTaxes],
+    ['Utilities', curUtilities, newUtilities],
+    ['Maintenance', curMaint, newMaint],
+  ];
+  let tbody = '';
+  rows.forEach(([label, cur, nw]) => {
+    const diff = cur - nw;
+    tbody += `<tr>
+      <td>${label}</td>
+      <td>${fmt(cur)}</td>
+      <td>${fmt(nw)}</td>
+      <td class="savings">${diff >= 0 ? '+' : ''}${fmt(diff)}</td>
+    </tr>`;
+  });
+  tbody += `<tr class="total-row">
+    <td>Total Annual Cost</td>
+    <td>${fmt(curTotal)}</td>
+    <td>${fmt(newTotal)}</td>
+    <td class="savings">+${fmt(annualSavings)}</td>
+  </tr>`;
+  document.getElementById('breakdownBody').innerHTML = tbody;
+
+  // Show results
+  const resultsEl = document.getElementById('results');
+  resultsEl.classList.add('show');
+  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+</script>
+
+<div style="background:#0F2A4A;padding:40px 20px;text-align:center;margin-top:40px;">
+  <p style="font-family:'Plus Jakarta Sans',sans-serif;color:rgba(255,255,255,0.6);font-size:0.85rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.08em;">More Free Resources</p>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:600px;margin:0 auto 24px;">
+    <a href="/quiz/" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;padding:10px 20px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;text-decoration:none;">Rightsizing Readiness Quiz</a>
+    <a href="/rightsize-timing/" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;padding:10px 20px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;text-decoration:none;">When Is the Right Time?</a>
+    <a href="/declutter/" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;padding:10px 20px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;text-decoration:none;">7 Steps to Declutter</a>
+    <a href="/forever-home-checklist/" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;padding:10px 20px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;text-decoration:none;">Forever Home Checklist</a>
+  </div>
+  <a href="/" style="color:#F59E0B;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;text-decoration:none;">← Back to TimeToRightsize.com</a>
+</div>
+
+</body>
+</html>

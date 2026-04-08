@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Block WordPress paths (leftover from old site)
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /wp-login.php
+Disallow: /wp-json/
+Disallow: /xmlrpc.php
+
+# Block old property/product spam paths
+Disallow: /properties/
+Disallow: /products/
+
+# Block old WordPress URL parameters
+Disallow: /*?p=
+Disallow: /*?page_id=
+
+Sitemap: https://timetorightsize.com/sitemap.xml
