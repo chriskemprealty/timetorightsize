@@ -97,11 +97,21 @@
   status = 200
 
 [[redirects]]
-  from = "/thank-you/"
-  to = "/thank-you.html"
+  from = "/rightsizing-guide/"
+  to = "/rightsizing-guide.html"
   status = 200
 
 [[redirects]]
-  from = "/thank-you"
-  to = "/thank-you.html"
+  from = "/rightsizing-guide"
+  to = "/rightsizing-guide.html"
   status = 200
+
+[[redirects]]
+  from = "/ultimate-guide-to-rightsizing"
+  to = "/rightsizing-guide"
+  status = 301
+
+[[redirects]]
+  from = "/ultimate-guide-to-rightsizing/"
+  to = "/rightsizing-guide"
+  status = 301
