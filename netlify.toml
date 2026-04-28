@@ -1,6 +1,7 @@
 # ============================================================
 # timetorightsize.com — Netlify Configuration
-# Updated: 2026-04-08
+# Updated: 2026-04-28
+# Note: All redirects are handled in _redirects file
 # ============================================================
 
 [build]
@@ -32,86 +33,3 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# ------------------------------------------------------------
-# REDIRECTS — clean URLs for all pages
-# ------------------------------------------------------------
-[[redirects]]
-  from = "/calculator/"
-  to = "/calculator.html"
-  status = 200
-
-[[redirects]]
-  from = "/calculator"
-  to = "/calculator.html"
-  status = 200
-
-[[redirects]]
-  from = "/quiz/"
-  to = "/quiz.html"
-  status = 200
-
-[[redirects]]
-  from = "/quiz"
-  to = "/quiz.html"
-  status = 200
-
-[[redirects]]
-  from = "/declutter/"
-  to = "/declutter.html"
-  status = 200
-
-[[redirects]]
-  from = "/declutter"
-  to = "/declutter.html"
-  status = 200
-
-[[redirects]]
-  from = "/forever-home-checklist/"
-  to = "/forever-home-checklist.html"
-  status = 200
-
-[[redirects]]
-  from = "/forever-home-checklist"
-  to = "/forever-home-checklist.html"
-  status = 200
-
-[[redirects]]
-  from = "/rightsize-timing/"
-  to = "/rightsize-timing.html"
-  status = 200
-
-[[redirects]]
-  from = "/rightsize-timing"
-  to = "/rightsize-timing.html"
-  status = 200
-
-[[redirects]]
-  from = "/rightsizing-savings-calculator/"
-  to = "/calculator.html"
-  status = 200
-
-[[redirects]]
-  from = "/rightsizing-savings-calculator"
-  to = "/calculator.html"
-  status = 200
-
-[[redirects]]
-  from = "/rightsizing-guide/"
-  to = "/rightsizing-guide.html"
-  status = 200
-
-[[redirects]]
-  from = "/rightsizing-guide"
-  to = "/rightsizing-guide.html"
-  status = 200
-
-[[redirects]]
-  from = "/ultimate-guide-to-rightsizing"
-  to = "/rightsizing-guide"
-  status = 301
-
-[[redirects]]
-  from = "/ultimate-guide-to-rightsizing/"
-  to = "/rightsizing-guide"
-  status = 301
