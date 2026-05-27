@@ -1023,4 +1023,10 @@
     document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
     document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
     document.getElementById('results-card').classList.remove('active');
-    document.getElementById('gate-c
+    document.getElementById('gate-card').classList.remove('active');
+    document.getElementById('start-card').classList.add('active');
+    document.getElementById('start-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
