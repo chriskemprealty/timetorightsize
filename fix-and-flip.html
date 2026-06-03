@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fix & Flip Calculator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+</style>
+<style>
+  :root {
+    --navy: #0F2A4A;
+    --navy-mid: #1a3a5c;
+    --navy-light: #234d7a;
+    --gold: #F59E0B;
+    --gold-light: #FCD34D;
+    --gold-dark: #d97706;
+    --green: #10b981;
+    --red: #ef4444;
+    --white: #ffffff;
+    --off-white: #f8f6f1;
+    --gray: #94a3b8;
+    --gray-light: #e2e8f0;
+    --text: #1e293b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--gold);
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  header h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 0.8rem;
+    color: var(--gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 6px 16px;
+    border-radius: 4px;
+  }
+
+  /* LAYOUT */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 380px) 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(15,42,74,0.08);
+  }
+  .card-header {
+    background: var(--navy);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    letter-spacing: 1.5px;
+  }
+  .card-header .icon {
+    width: 24px;
+    height: 24px;
+    background: var(--gold);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+  .card-body { padding: 22px; }
+
+  /* INPUTS */
+  .field {
+    margin-bottom: 18px;
+  }
+  .field label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .field label .hint {
+    font-weight: 400;
+    color: var(--gray);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.7rem;
+    margin-left: 6px;
+  }
+  .input-wrap {
+    position: relative;
+  }
+  .input-wrap .prefix {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+  .input-wrap .suffix {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 0.85rem;
+    pointer-events: none;
+  }
+  input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 10px 36px 10px 26px;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--off-white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+    background: white;
+  }
+
+  /* SLIDER */
+  .slider-field { margin-bottom: 18px; }
+  .slider-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .slider-label-row label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--navy);
+  }
+  .slider-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold-dark);
+    font-weight: 500;
+  }
+  input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--gray-light);
+    outline: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--navy);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 20px 0;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--gold-dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-light);
+    opacity: 0.5;
+  }
+
+  /* RESULTS PANEL */
+  .results-stack { display: flex; flex-direction: column; gap: 20px; }
+
+  /* ARV RULE CARDS */
+  .arv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .arv-card {
+    border-radius: 10px;
+    padding: 16px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .arv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .arv-card.conservative { background: #fef3c7; border-color: #fbbf24; }
+  .arv-card.conservative::before { background: #f59e0b; }
+  .arv-card.standard { background: #dbeafe; border-color: #3b82f6; }
+  .arv-card.standard::before { background: #2563eb; }
+  .arv-card.aggressive { background: #dcfce7; border-color: #22c55e; }
+  .arv-card.aggressive::before { background: #16a34a; }
+  .arv-card-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .conservative .arv-card-pct { color: #d97706; }
+  .standard .arv-card-pct { color: #1d4ed8; }
+  .aggressive .arv-card-pct { color: #15803d; }
+  .arv-card-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  .arv-card-max {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .arv-card-profit {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* PROFIT METER */
+  .profit-meter {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 24px;
+    color: white;
+  }
+  .profit-meter-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .profit-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+  }
+  .profit-row {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+  .profit-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    color: var(--gray);
+    align-self: flex-end;
+    padding-bottom: 6px;
+  }
+  .meter-bar-wrap {
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .meter-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease, background 0.3s;
+  }
+  .profit-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .pb-item {}
+  .pb-item-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray);
+    margin-bottom: 2px;
+  }
+  .pb-item-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.92rem;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* COST BREAKDOWN TABLE */
+  .cost-table { width: 100%; }
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--gray-light);
+    font-size: 0.88rem;
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-row .name { color: #475569; }
+  .cost-row .amount {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .cost-row.total-row {
+    border-top: 2px solid var(--navy);
+    border-bottom: none;
+    padding-top: 12px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .cost-row.total-row .name { color: var(--navy); font-weight: 700; }
+  .cost-row.negative .amount { color: var(--red); }
+
+  /* VERDICT BANNER */
+  .verdict {
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.3s;
+  }
+  .verdict-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .verdict-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+  .verdict-sub {
+    font-size: 0.78rem;
+    opacity: 0.8;
+    line-height: 1.4;
+  }
+
+  /* BREAK EVEN */
+  .be-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--gray-light);
+    font-size: 0.88rem;
+  }
+  .be-row:last-child { border-bottom: none; }
+  .be-highlight {
+    background: #fff3cd;
+    border: 1.5px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .be-highlight-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--navy);
+  }
+  .be-highlight-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  @media (max-width: 800px) {
+    .main {
+      grid-template-columns: 1fr;
+      padding: 16px;
+      gap: 16px;
+    }
+    header {
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+      padding: 18px 16px;
+    }
+    header h1 { font-size: 1.9rem; }
+    .arv-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .arv-card { padding: 12px 8px; }
+    .arv-card-pct { font-size: 1.5rem; }
+    .arv-card-max { font-size: 0.78rem; }
+    .arv-card-profit { font-size: 0.65rem; }
+    .profit-big { font-size: 2.6rem; }
+    input[type="number"], input[type="text"] {
+      font-size: 1rem;
+      padding: 12px 36px 12px 26px;
+    }
+    .card-body { padding: 16px; }
+    .slider-field { margin-bottom: 22px; }
+  }
+
+  @media (max-width: 400px) {
+    .arv-grid { grid-template-columns: 1fr; }
+    .arv-card { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Fix & <span>Flip</span> Calculator</h1>
+    <div class="header-sub">Investment Property Analysis Tool</div>
+  </div>
+  <div class="header-badge">Chris Kemp Realty</div>
+</header>
+
+<div class="main">
+
+  <!-- LEFT: INPUTS -->
+  <div>
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-header">
+        <div class="icon">🏠</div>
+        <h2>Property Details</h2>
+      </div>
+      <div class="card-body">
+        <div class="section-label">Valuation</div>
+        <div class="field">
+          <label>After Repair Value (ARV)</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="arv" value="550000" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+        <div class="field">
+          <label>Purchase Price <span class="hint">what you plan to pay</span></label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="purchase" value="350000" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+        <div class="field">
+          <label>Repair / Rehab Cost</label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="repair" value="40000" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label">Selling Costs</div>
+
+        <div class="slider-field">
+          <div class="slider-label-row">
+            <label>Buyer's Agent Commission</label>
+            <span class="slider-value" id="bacVal">3.0%</span>
+          </div>
+          <input type="range" id="bac" min="0" max="6" step="0.25" value="3" oninput="updateSlider('bac','bacVal','%');calc()">
+        </div>
+        <div class="slider-field">
+          <div class="slider-label-row">
+            <label>Listing Agent Commission</label>
+            <span class="slider-value" id="lacVal">3.0%</span>
+          </div>
+          <input type="range" id="lac" min="0" max="6" step="0.25" value="3" oninput="updateSlider('lac','lacVal','%');calc()">
+        </div>
+        <div class="slider-field">
+          <div class="slider-label-row">
+            <label>Closing Costs (Seller Paid)</label>
+            <span class="slider-value" id="ccVal">2.0%</span>
+          </div>
+          <input type="range" id="cc" min="0" max="5" step="0.25" value="2" oninput="updateSlider('cc','ccVal','%');calc()">
+        </div>
+        <div class="slider-field">
+          <div class="slider-label-row">
+            <label>Seller Concessions</label>
+            <span class="slider-value" id="conVal">0.0%</span>
+          </div>
+          <input type="range" id="con" min="0" max="6" step="0.25" value="0" oninput="updateSlider('con','conVal','%');calc()">
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label">Holding Costs</div>
+
+        <div class="slider-field">
+          <div class="slider-label-row">
+            <label>Monthly Holding Rate</label>
+            <span class="slider-value" id="holdRateVal">1.0%</span>
+          </div>
+          <input type="range" id="holdRate" min="0.5" max="3" step="0.25" value="1" oninput="updateSlider('holdRate','holdRateVal','%');calc()">
+        </div>
+        <div class="slider-field">
+          <div class="slider-label-row">
+            <label>Hold Period</label>
+            <span class="slider-value" id="holdMonthsVal">4 months</span>
+          </div>
+          <input type="range" id="holdMonths" min="1" max="18" step="1" value="4" oninput="updateSliderMonths();calc()">
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-label">Misc</div>
+        <div class="field">
+          <label>Other Costs <span class="hint">permits, staging, etc.</span></label>
+          <div class="input-wrap">
+            <span class="prefix">$</span>
+            <input type="number" id="other" value="0" inputmode="numeric" oninput="calc()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div class="results-stack">
+
+    <!-- PROFIT METER -->
+    <div class="profit-meter">
+      <div class="profit-meter-label">Estimated Net Profit</div>
+      <div class="profit-row">
+        <div class="profit-big" id="profitBig">$0</div>
+        <div class="profit-pct" id="profitPct">0% ROI</div>
+      </div>
+      <div class="meter-bar-wrap">
+        <div class="meter-bar" id="meterBar" style="width:0%;background:var(--gold)"></div>
+      </div>
+      <div class="profit-breakdown">
+        <div class="pb-item">
+          <div class="pb-item-label">Total Investment</div>
+          <div class="pb-item-value" id="totalInvest">—</div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-item-label">Net Proceeds</div>
+          <div class="pb-item-value" id="netProceeds">—</div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-item-label">Total Selling Costs</div>
+          <div class="pb-item-value" id="totalSell">—</div>
+        </div>
+        <div class="pb-item">
+          <div class="pb-item-label">Holding Costs</div>
+          <div class="pb-item-value" id="holdCostDisplay">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERDICT -->
+    <div class="verdict" id="verdict">
+      <div class="verdict-icon" id="verdictIcon">⏳</div>
+      <div>
+        <div class="verdict-title" id="verdictTitle">Enter your numbers</div>
+        <div class="verdict-sub" id="verdictSub">Fill in the property details to see your analysis.</div>
+      </div>
+    </div>
+
+    <!-- COST BREAKDOWN -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon">📊</div>
+        <h2>Cost Breakdown</h2>
+      </div>
+      <div class="card-body">
+        <div class="cost-table">
+          <div class="cost-row">
+            <span class="name">Purchase Price</span>
+            <span class="amount negative" id="cbPurchase">—</span>
+          </div>
+          <div class="cost-row">
+            <span class="name">Repair / Rehab</span>
+            <span class="amount negative" id="cbRepair">—</span>
+          </div>
+          <div class="cost-row">
+            <span class="name">Buyer's Agent (<span id="cbBacPct">3%</span>)</span>
+            <span class="amount negative" id="cbBac">—</span>
+          </div>
+          <div class="cost-row">
+            <span class="name">Listing Agent (<span id="cbLacPct">3%</span>)</span>
+            <span class="amount negative" id="cbLac">—</span>
+          </div>
+          <div class="cost-row">
+            <span class="name">Closing Costs (<span id="cbCcPct">2%</span>)</span>
+            <span class="amount negative" id="cbCc">—</span>
+          </div>
+          <div class="cost-row" id="concRow">
+            <span class="name">Concessions (<span id="cbConPct">0%</span>)</span>
+            <span class="amount negative" id="cbCon">—</span>
+          </div>
+          <div class="cost-row">
+            <span class="name">Holding (<span id="cbHoldDesc">1%/mo × 4mo</span>)</span>
+            <span class="amount negative" id="cbHold">—</span>
+          </div>
+          <div class="cost-row" id="otherRow">
+            <span class="name">Other Costs</span>
+            <span class="amount negative" id="cbOther">—</span>
+          </div>
+          <div class="cost-row total-row">
+            <span class="name">ARV (Sale Price)</span>
+            <span class="amount" id="cbArv" style="color:var(--green)">—</span>
+          </div>
+          <div class="cost-row total-row">
+            <span class="name">NET PROFIT</span>
+            <span class="amount" id="cbProfit">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARV RULE COMPARISON -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon">🎯</div>
+        <h2>ARV Rule Comparison — Max Allowable Offer</h2>
+      </div>
+      <div class="card-body">
+        <p style="font-size:0.78rem;color:#64748b;margin-bottom:14px;">Based on your ARV and estimated costs — how does your purchase price compare?</p>
+        <div class="arv-grid">
+          <div class="arv-card conservative">
+            <div class="arv-card-pct">70%</div>
+            <div class="arv-card-label">Conservative</div>
+            <div class="arv-card-max" id="mao70">—</div>
+            <div class="arv-card-profit" id="mao70profit"></div>
+          </div>
+          <div class="arv-card standard">
+            <div class="arv-card-pct">75%</div>
+            <div class="arv-card-label">Standard</div>
+            <div class="arv-card-max" id="mao75">—</div>
+            <div class="arv-card-profit" id="mao75profit"></div>
+          </div>
+          <div class="arv-card aggressive">
+            <div class="arv-card-pct">80%</div>
+            <div class="arv-card-label">Aggressive</div>
+            <div class="arv-card-max" id="mao80">—</div>
+            <div class="arv-card-profit" id="mao80profit"></div>
+          </div>
+        </div>
+        <p style="font-size:0.72rem;color:#94a3b8;margin-top:12px;">Formula: (ARV × rule%) − Repair Costs = Max Allowable Offer</p>
+      </div>
+    </div>
+
+    <!-- BREAK EVEN -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon">⚖️</div>
+        <h2>Break-Even Analysis</h2>
+      </div>
+      <div class="card-body">
+        <div class="be-row">
+          <span style="color:#475569;font-size:0.88rem;">Purchase Price</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.88rem;" id="bePurchase">—</span>
+        </div>
+        <div class="be-row">
+          <span style="color:#475569;font-size:0.88rem;">+ Repair Costs</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.88rem;" id="beRepair">—</span>
+        </div>
+        <div class="be-row">
+          <span style="color:#475569;font-size:0.88rem;">+ All Selling &amp; Holding Costs</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.88rem;" id="beCosts">—</span>
+        </div>
+        <div class="be-highlight">
+          <div>
+            <div class="be-highlight-label">Break-Even Sale Price</div>
+            <div style="font-size:0.7rem;color:#64748b;margin-top:2px;">Lose money if you sell below this</div>
+          </div>
+          <div class="be-highlight-value" id="beTotal">—</div>
+        </div>
+        <div style="margin-top:12px;padding:10px 14px;background:#f0f9ff;border-radius:8px;border-left:3px solid #3b82f6;">
+          <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#1d4ed8;margin-bottom:3px;">Spread to ARV</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.9rem;color:#1e40af;" id="beSpread">—</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function fmt(n) {
+  if (isNaN(n)) return '—';
+  const abs = Math.abs(n);
+  const str = abs.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+  return (n < 0 ? '-$' : '$') + str;
+}
+function fmtNeg(n) {
+  return isNaN(n) ? '—' : '-$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+}
+
+function updateSlider(id, valId, suffix) {
+  document.getElementById(valId).textContent = parseFloat(document.getElementById(id).value).toFixed(1) + suffix;
+}
+function updateSliderMonths() {
+  const v = parseInt(document.getElementById('holdMonths').value);
+  document.getElementById('holdMonthsVal').textContent = v + (v === 1 ? ' month' : ' months');
+}
+
+function calc() {
+  const arv       = parseFloat(document.getElementById('arv').value) || 0;
+  const purchase  = parseFloat(document.getElementById('purchase').value) || 0;
+  const repair    = parseFloat(document.getElementById('repair').value) || 0;
+  const bacPct    = parseFloat(document.getElementById('bac').value) / 100;
+  const lacPct    = parseFloat(document.getElementById('lac').value) / 100;
+  const ccPct     = parseFloat(document.getElementById('cc').value) / 100;
+  const conPct    = parseFloat(document.getElementById('con').value) / 100;
+  const holdRate  = parseFloat(document.getElementById('holdRate').value) / 100;
+  const holdMonths= parseInt(document.getElementById('holdMonths').value);
+  const other     = parseFloat(document.getElementById('other').value) || 0;
+
+  // Selling costs (based on ARV)
+  const bacCost   = arv * bacPct;
+  const lacCost   = arv * lacPct;
+  const ccCost    = arv * ccPct;
+  const conCost   = arv * conPct;
+  const totalSellCost = bacCost + lacCost + ccCost + conCost;
+
+  // Holding costs (based on purchase price × monthly rate × months)
+  const holdCost  = purchase * holdRate * holdMonths;
+
+  // Totals
+  const totalCosts = purchase + repair + totalSellCost + holdCost + other;
+  const profit     = arv - totalCosts;
+  const totalInvest = purchase + repair + holdCost + other;
+  const netProceeds = arv - totalSellCost;
+  const roi = totalInvest > 0 ? (profit / totalInvest) * 100 : 0;
+
+  // MAO formula: (ARV × pct) - repair
+  const mao70 = arv * 0.70 - repair;
+  const mao75 = arv * 0.75 - repair;
+  const mao80 = arv * 0.80 - repair;
+
+  // Break even
+  const breakEven = purchase + repair + totalSellCost + holdCost + other;
+
+  // ---- UPDATE UI ----
+
+  // Profit meter
+  document.getElementById('profitBig').textContent = fmt(profit);
+  document.getElementById('profitBig').style.color = profit >= 0 ? 'var(--gold)' : 'var(--red)';
+  document.getElementById('profitPct').textContent = roi.toFixed(1) + '% ROI';
+  document.getElementById('totalInvest').textContent = fmt(totalInvest);
+  document.getElementById('netProceeds').textContent = fmt(netProceeds);
+  document.getElementById('totalSell').textContent = fmtNeg(totalSellCost);
+  document.getElementById('holdCostDisplay').textContent = fmtNeg(holdCost);
+
+  // Meter bar
+  const barPct = Math.min(Math.max((roi / 30) * 100, 0), 100);
+  document.getElementById('meterBar').style.width = barPct + '%';
+  document.getElementById('meterBar').style.background = profit < 0 ? 'var(--red)' : roi > 20 ? 'var(--green)' : 'var(--gold)';
+
+  // Verdict
+  const verdict = document.getElementById('verdict');
+  const vIcon = document.getElementById('verdictIcon');
+  const vTitle = document.getElementById('verdictTitle');
+  const vSub = document.getElementById('verdictSub');
+  if (profit < 0) {
+    verdict.style.cssText = 'background:#fee2e2;border:1.5px solid #fca5a5;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px;';
+    vIcon.textContent = '🚨';
+    vTitle.style.color = '#dc2626';
+    vTitle.textContent = 'DEAL KILLER — You\'re Losing Money';
+    vSub.textContent = `At this purchase price you're projected to lose ${fmt(Math.abs(profit))}. Lower your offer or reduce costs.`;
+  } else if (roi < 10) {
+    verdict.style.cssText = 'background:#fff3cd;border:1.5px solid var(--gold);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px;';
+    vIcon.textContent = '⚠️';
+    vTitle.style.color = '#92400e';
+    vTitle.textContent = 'THIN MARGINS — Proceed with Caution';
+    vSub.textContent = `ROI of ${roi.toFixed(1)}% leaves little room for error. Any overruns could wipe the profit.`;
+  } else if (roi < 20) {
+    verdict.style.cssText = 'background:#dbeafe;border:1.5px solid #3b82f6;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px;';
+    vIcon.textContent = '✅';
+    vTitle.style.color = '#1d4ed8';
+    vTitle.textContent = 'DECENT DEAL — Solid Numbers';
+    vSub.textContent = `ROI of ${roi.toFixed(1)}% is respectable. Make sure your rehab estimate has a contingency buffer.`;
+  } else {
+    verdict.style.cssText = 'background:#dcfce7;border:1.5px solid #22c55e;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px;';
+    vIcon.textContent = '🔥';
+    vTitle.style.color = '#15803d';
+    vTitle.textContent = 'STRONG DEAL — Great ROI';
+    vSub.textContent = `ROI of ${roi.toFixed(1)}% is excellent. Verify your ARV and rehab number and move quickly!`;
+  }
+
+  // Cost breakdown
+  document.getElementById('cbPurchase').textContent = fmtNeg(purchase);
+  document.getElementById('cbRepair').textContent = fmtNeg(repair);
+  document.getElementById('cbBacPct').textContent = (bacPct*100).toFixed(1)+'%';
+  document.getElementById('cbBac').textContent = fmtNeg(bacCost);
+  document.getElementById('cbLacPct').textContent = (lacPct*100).toFixed(1)+'%';
+  document.getElementById('cbLac').textContent = fmtNeg(lacCost);
+  document.getElementById('cbCcPct').textContent = (ccPct*100).toFixed(1)+'%';
+  document.getElementById('cbCc').textContent = fmtNeg(ccCost);
+  document.getElementById('cbConPct').textContent = (conPct*100).toFixed(1)+'%';
+  document.getElementById('cbCon').textContent = fmtNeg(conCost);
+  document.getElementById('concRow').style.display = conPct > 0 ? 'flex' : 'none';
+  document.getElementById('cbHoldDesc').textContent = (holdRate*100).toFixed(2)+'%/mo × '+holdMonths+'mo';
+  document.getElementById('cbHold').textContent = fmtNeg(holdCost);
+  document.getElementById('otherRow').style.display = other > 0 ? 'flex' : 'none';
+  document.getElementById('cbOther').textContent = fmtNeg(other);
+  document.getElementById('cbArv').textContent = fmt(arv);
+  document.getElementById('cbProfit').textContent = fmt(profit);
+  document.getElementById('cbProfit').style.color = profit >= 0 ? 'var(--green)' : 'var(--red)';
+
+  // MAO cards
+  document.getElementById('mao70').textContent = fmt(mao70);
+  document.getElementById('mao75').textContent = fmt(mao75);
+  document.getElementById('mao80').textContent = fmt(mao80);
+
+  const maoProfit70 = arv - (mao70 + repair + arv*(bacPct+lacPct+ccPct+conPct) + mao70*holdRate*holdMonths + other);
+  const maoProfit75 = arv - (mao75 + repair + arv*(bacPct+lacPct+ccPct+conPct) + mao75*holdRate*holdMonths + other);
+  const maoProfit80 = arv - (mao80 + repair + arv*(bacPct+lacPct+ccPct+conPct) + mao80*holdRate*holdMonths + other);
+
+  function profitLabel(p, el) {
+    el.textContent = 'Est. profit: ' + fmt(p);
+    el.style.color = p >= 0 ? '#15803d' : '#dc2626';
+  }
+  profitLabel(maoProfit70, document.getElementById('mao70profit'));
+  profitLabel(maoProfit75, document.getElementById('mao75profit'));
+  profitLabel(maoProfit80, document.getElementById('mao80profit'));
+
+  // Purchase price indicator on MAO cards
+  [70,75,80].forEach(pct => {
+    const mao = arv * (pct/100) - repair;
+    const card = document.querySelector(`.arv-card.${pct===70?'conservative':pct===75?'standard':'aggressive'}`);
+    if (purchase <= mao && mao > 0) {
+      card.style.opacity = '1';
+    } else {
+      card.style.opacity = purchase === 0 ? '1' : '0.6';
+    }
+  });
+
+  // Break even
+  document.getElementById('bePurchase').textContent = fmt(purchase);
+  document.getElementById('beRepair').textContent = fmt(repair);
+  document.getElementById('beCosts').textContent = fmt(totalSellCost + holdCost + other);
+  document.getElementById('beTotal').textContent = fmt(breakEven);
+  const spread = arv - breakEven;
+  document.getElementById('beSpread').textContent = fmt(spread) + (arv > 0 ? '  (' + ((spread/arv)*100).toFixed(1) + '% of ARV)' : '');
+}
+
+// Init sliders display
+updateSlider('bac','bacVal','%');
+updateSlider('lac','lacVal','%');
+updateSlider('cc','ccVal','%');
+updateSlider('con','conVal','%');
+updateSlider('holdRate','holdRateVal','%');
+updateSliderMonths();
+calc();
+</script>
+</body>
+</html>
