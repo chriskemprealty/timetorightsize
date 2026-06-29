@@ -10,6 +10,13 @@
 /rightsize-timing               /rightsize-timing.html              200
 /rightsizing-savings-calculator/ /calculator.html                   200
 /rightsizing-savings-calculator  /calculator.html                   200
+/rightsizing-guide/              /rightsizing-guide.html             200
+/rightsizing-guide               /rightsizing-guide.html             200
+
+/fix-and-flip/                   /fix-and-flip.html                  200
+/fix-and-flip                    /fix-and-flip.html                  200
+/ultimate-guide-to-rightsizing/  /rightsizing-guide.html             301
+/ultimate-guide-to-rightsizing   /rightsizing-guide.html             301
 /wp-content/*                   /                                   410
 /wp-admin/*                     /                                   410
 /wp-login.php                   /                                   410

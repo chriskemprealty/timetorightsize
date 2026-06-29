@@ -50,4 +50,18 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://timetorightsize.com/rightsizing-guide/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://timetorightsize.com/fix-and-flip/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
