@@ -1,0 +1,869 @@
+<title>Rightsizing Readiness Score</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f6f7fa;
+    --surface-2: #eceef3;
+    --ink: #16233b;
+    --ink-soft: #545e75;
+    --ink-faint: #626b82;
+    --border: #e1e4ec;
+    --gold: #a97e21;
+    --gold-ink: #7a5a15;
+    --gold-soft: #f6ecd6;
+    --green: #276b45;
+    --green-soft: #e2f1e7;
+    --low: #5c6785;
+    --low-soft: #eaecf3;
+    --cta-body: rgba(255,255,255,0.74);
+    --cta-sep: rgba(255,255,255,0.32);
+    --shadow: 0 1px 2px rgba(22,35,59,0.04), 0 8px 24px -12px rgba(22,35,59,0.18);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1220;
+      --surface: #121b2e;
+      --surface-2: #1a2540;
+      --ink: #edf0f6;
+      --ink-soft: #aab2c8;
+      --ink-faint: #7a839c;
+      --border: #263355;
+      --gold: #e3b657;
+      --gold-ink: #f2cf85;
+      --gold-soft: #2b2312;
+      --green: #57c084;
+      --green-soft: #12291d;
+      --low: #8892b0;
+      --low-soft: #1b2440;
+      --cta-body: rgba(11,18,32,0.68);
+      --cta-sep: rgba(11,18,32,0.3);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1220;
+    --surface: #121b2e;
+    --surface-2: #1a2540;
+    --ink: #edf0f6;
+    --ink-soft: #aab2c8;
+    --ink-faint: #7a839c;
+    --border: #263355;
+    --gold: #e3b657;
+    --gold-ink: #f2cf85;
+    --gold-soft: #2b2312;
+    --green: #57c084;
+    --green-soft: #12291d;
+    --low: #8892b0;
+    --low-soft: #1b2440;
+    --cta-body: rgba(11,18,32,0.68);
+    --cta-sep: rgba(11,18,32,0.3);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.6);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 28px;
+  }
+  .brand .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+
+  h1, h2, h3 { font-family: "Fraunces", Georgia, "Times New Roman", serif; text-wrap: balance; margin: 0; }
+
+  /* ---------- Intro ---------- */
+  #screen-intro { text-align: center; }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+    margin-bottom: 14px;
+  }
+  #screen-intro h1 {
+    font-size: clamp(30px, 6vw, 42px);
+    font-weight: 600;
+    font-optical-sizing: auto;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin: 18px auto 0;
+  }
+
+  .factor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin: 36px 0 8px;
+    text-align: left;
+  }
+  .factor-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+  }
+  .factor-chip .icon { color: var(--gold-ink); margin-bottom: 10px; }
+  .factor-chip .icon svg { width: 22px; height: 22px; display: block; }
+  .factor-chip .name { font-weight: 600; font-size: 14.5px; color: var(--ink); }
+  .factor-chip .desc { font-size: 12.5px; color: var(--ink-faint); margin-top: 3px; line-height: 1.4; }
+
+  .meta-line {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 22px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    appearance: none;
+    border: none;
+    font-family: inherit;
+    font-size: 15.5px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 13px 28px;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .btn-row { display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap { margin-bottom: 30px; }
+  .progress-track {
+    height: 4px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+    width: 0%;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- Question screens ---------- */
+  .q-screen { display: none; }
+  .q-screen.active { display: block; animation: fadein 0.25s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
+
+  .factor-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .factor-head .icon-badge {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: var(--gold-soft);
+    color: var(--gold-ink);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .factor-head .icon-badge svg { width: 24px; height: 24px; }
+  .factor-head .tag { font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+  .factor-head h2 { font-size: 24px; font-weight: 600; margin-top: 2px; }
+
+  .q-block { margin-bottom: 26px; }
+  .q-text { font-size: 15.5px; font-weight: 600; color: var(--ink); margin-bottom: 12px; line-height: 1.45; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 13px 15px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    line-height: 1.45;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .option:hover { border-color: var(--ink-faint); }
+  .option .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid var(--ink-faint);
+    flex-shrink: 0; margin-top: 1px;
+    position: relative;
+  }
+  .option.selected {
+    background: var(--gold-soft);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .option.selected .dot { border-color: var(--gold); background: var(--gold); }
+  .option.selected .dot::after {
+    content: "";
+    position: absolute; inset: 3px;
+    border-radius: 50%;
+    background: var(--bg);
+  }
+
+  /* ---------- Results ---------- */
+  #screen-results { display: none; }
+  #screen-results.active { display: block; animation: fadein 0.3s ease; }
+
+  .score-hero {
+    text-align: center;
+    padding: 36px 20px 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    margin-bottom: 28px;
+  }
+  .score-hero .eyebrow { margin-bottom: 4px; }
+  .score-number {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 76px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .score-number span { font-size: 26px; color: var(--ink-faint); font-weight: 500; margin-left: 4px; }
+  .tier-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .tier-pill .swatch { width: 8px; height: 8px; border-radius: 50%; }
+  .tier-pill.ready { background: var(--green-soft); color: var(--green); }
+  .tier-pill.ready .swatch { background: var(--green); }
+  .tier-pill.close { background: var(--gold-soft); color: var(--gold-ink); }
+  .tier-pill.close .swatch { background: var(--gold); }
+  .tier-pill.notyet { background: var(--low-soft); color: var(--low); }
+  .tier-pill.notyet .swatch { background: var(--low); }
+
+  .score-narrative {
+    max-width: 460px;
+    margin: 16px auto 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .breakdown-title {
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+  .factor-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 34px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .factor-row .flabel { font-size: 14px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .factor-row .flabel svg { width: 15px; height: 15px; color: var(--ink-faint); flex-shrink: 0; }
+  .bar-track { height: 10px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; transition: width 0.5s ease; }
+  .bar-fill.ready { background: var(--green); }
+  .bar-fill.close { background: var(--gold); }
+  .bar-fill.notyet { background: var(--low); }
+  .factor-row .fscore { font-size: 13.5px; font-weight: 600; color: var(--ink-soft); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .insights { margin-top: 22px; display: grid; gap: 10px; }
+  .insight-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .insight-card .ihead { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .insight-card .ihead svg { width: 15px; height: 15px; color: var(--ink-faint); }
+  .insight-card .iname { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+  .insight-card p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+
+  .cta-card {
+    margin-top: 32px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 18px;
+    padding: 28px 26px;
+    text-align: center;
+  }
+  .cta-card h3 { color: var(--bg); font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .cta-card p { font-size: 14.5px; line-height: 1.6; color: var(--cta-body); max-width: 380px; margin: 0 auto 18px; }
+  .cta-contact {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 18px;
+    font-size: 13.5px; color: var(--cta-body);
+  }
+  .cta-contact a { color: var(--bg); text-decoration: none; font-weight: 600; }
+  .cta-contact a:hover { text-decoration: underline; }
+  .cta-contact .sep { color: var(--cta-sep); }
+
+  .disclaimer {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-faint);
+    max-width: 480px;
+    margin: 26px auto 0;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .factor-row { grid-template-columns: 100px 1fr 30px; }
+    .score-number { font-size: 60px; }
+    .cta-card { padding: 24px 18px; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="brand"><span>Chris Kemp</span><span class="dot"></span><span>Rightsizing Readiness Score</span></div>
+
+  <!-- INTRO -->
+  <section id="screen-intro">
+    <div class="eyebrow">The filter behind every price I recommend</div>
+    <h1>What's your Rightsizing&nbsp;Readiness&nbsp;Score?</h1>
+    <p class="lede">Before I ever tell a client what to list their home for, I run it through five filters. Answer 15 quick questions and see how your own home scores &mdash; in about three minutes.</p>
+
+    <div class="factor-grid" id="intro-factor-grid"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="start-btn">Start the assessment</button>
+    </div>
+    <p class="meta-line">No email required. Just an honest look at where you stand.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <div id="quiz-flow" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label"><span id="progress-text">Factor 1 of 5</span><span id="progress-name">Location</span></div>
+    </div>
+    <div id="questions-mount"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <section id="screen-results">
+    <div class="score-hero">
+      <div class="eyebrow">Your result</div>
+      <div class="score-number"><span id="score-value">0</span><span>/100</span></div>
+      <div class="tier-pill" id="tier-pill"><span class="swatch"></span><span id="tier-label"></span></div>
+      <p class="score-narrative" id="score-narrative"></p>
+    </div>
+
+    <div class="breakdown-title">Score by factor</div>
+    <div id="factor-rows"></div>
+
+    <div class="insights" id="insight-cards"></div>
+
+    <div class="cta-card">
+      <h3>Want an honest read on your specific home?</h3>
+      <p>A score is a starting point, not a verdict. If you'd like to talk through what your numbers actually mean, I'm happy to help &mdash; no pressure, no obligation.</p>
+      <div class="cta-contact">
+        <a href="tel:8014201378">801-420-1378</a>
+        <span class="sep">&middot;</span>
+        <a href="mailto:Chris@ChrisKempRealty.com">Chris@ChrisKempRealty.com</a>
+        <span class="sep">&middot;</span>
+        <a href="https://ChrisKempRealty.com" target="_blank" rel="noopener">ChrisKempRealty.com</a>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="copy-btn">Copy my results</button>
+      <button class="btn btn-ghost" id="restart-btn">Retake the assessment</button>
+    </div>
+
+    <p class="disclaimer">Chris Kemp, Associate Broker &mdash; Equity Real Estate. This tool is an educational self-assessment based on the same five factors Chris weighs with clients. It's a starting point for a conversation, not a market analysis or appraisal of your specific home.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var ICONS = {
+    location: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+    condition: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9"/><path d="M10 20v-5h4v5"/></svg>',
+    timing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
+    equity: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V13"/><path d="M10 19V9"/><path d="M16 19V5"/><path d="M20 19V11"/></svg>',
+    competition: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="6" height="6" rx="1"/><rect x="15" y="4" width="6" height="6" rx="1"/><rect x="3" y="14" width="6" height="6" rx="1"/><rect x="15" y="14" width="6" height="6" rx="1"/></svg>'
+  };
+
+  var FACTORS = [
+    {
+      id: "location",
+      name: "Location",
+      short: "Where you live",
+      desc: "Does the spot itself help or limit your price?",
+      questions: [
+        {
+          text: "How would you describe buyer demand in your neighborhood right now?",
+          options: [
+            { t: "Homes here sit for months, even in a good market", p: 0 },
+            { t: "Normal pace — about average for the area", p: 3 },
+            { t: "Homes here tend to sell faster than average", p: 6 },
+            { t: "This is one of the most requested areas around", p: 10 }
+          ]
+        },
+        {
+          text: "How close are you to what actually matters for your next chapter — family, medical care, walkable amenities, single-level options nearby?",
+          options: [
+            { t: "Far from what I need day to day", p: 0 },
+            { t: "Some of it is nearby, some isn't", p: 3 },
+            { t: "Most of what matters is a short drive away", p: 6 },
+            { t: "Everything I need is close by", p: 10 }
+          ]
+        },
+        {
+          text: "Does your home have location perks buyers notice — a view, a quiet street, a corner lot, easy walkability?",
+          options: [
+            { t: "No, fairly average lot and street", p: 0 },
+            { t: "One or two minor perks", p: 3 },
+            { t: "Several perks buyers would notice", p: 6 },
+            { t: "Location is genuinely one of the best-selling points", p: 10 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "condition",
+      name: "Condition",
+      short: "The home itself",
+      desc: "How much work stands between now and a listing photo?",
+      questions: [
+        {
+          text: "When were the major systems — roof, HVAC, water heater, electrical — last updated?",
+          options: [
+            { t: "Original to the home, likely 20+ years old", p: 0 },
+            { t: "A mix — some updated, some original", p: 3 },
+            { t: "Most updated within the last 10–15 years", p: 6 },
+            { t: "Everything's been updated or replaced recently", p: 10 }
+          ]
+        },
+        {
+          text: "How would a buyer walking through today describe the kitchen and bathrooms?",
+          options: [
+            { t: "Dated — needs real work", p: 0 },
+            { t: "Clean and functional, but not updated", p: 3 },
+            { t: "Tastefully updated, feels current", p: 6 },
+            { t: "Recently renovated or built to today's standard", p: 10 }
+          ]
+        },
+        {
+          text: "Is there deferred maintenance you've been putting off — foundation, roof, drainage, that kind of thing?",
+          options: [
+            { t: "Yes, more than one thing I've been avoiding", p: 0 },
+            { t: "One item I know I should address", p: 3 },
+            { t: "Nothing major, just normal upkeep", p: 6 },
+            { t: "Nothing — the home is in excellent shape", p: 10 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "timing",
+      name: "Timing",
+      short: "Your window",
+      desc: "Are you and the market ready at the same time?",
+      questions: [
+        {
+          text: "How does your own timeline look?",
+          options: [
+            { t: "No real timeline, just curious", p: 0 },
+            { t: "Thinking about it over the next 1–2 years", p: 3 },
+            { t: "Planning to move in the next 6–12 months", p: 6 },
+            { t: "Ready to move within the next few months", p: 10 }
+          ]
+        },
+        {
+          text: "Where do you personally stand on actually being ready to leave the home?",
+          options: [
+            { t: "Not emotionally ready to think about it", p: 0 },
+            { t: "Warming up to the idea", p: 3 },
+            { t: "Mostly ready, working through the logistics", p: 6 },
+            { t: "Fully ready — mentally and practically", p: 10 }
+          ]
+        },
+        {
+          text: "How does buyer demand look right now in your price range?",
+          options: [
+            { t: "Slow — homes are sitting, price cuts are common", p: 0 },
+            { t: "Steady but unremarkable", p: 3 },
+            { t: "Solid — good homes move in reasonable time", p: 6 },
+            { t: "Strong — well-priced homes get quick offers", p: 10 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "equity",
+      name: "Equity",
+      short: "Your numbers",
+      desc: "Does the math actually give you room to move?",
+      questions: [
+        {
+          text: "Roughly how much equity do you have relative to your home's value?",
+          options: [
+            { t: "Under 30%", p: 0 },
+            { t: "30–50%", p: 3 },
+            { t: "50–75%", p: 6 },
+            { t: "Over 75%, or owned outright", p: 10 }
+          ]
+        },
+        {
+          text: "Have you actually run the numbers — what you'd net after selling costs, and what your next move would cost?",
+          options: [
+            { t: "No, haven't looked closely", p: 0 },
+            { t: "Rough idea, not exact", p: 3 },
+            { t: "Fairly confident the numbers work", p: 6 },
+            { t: "Yes — I know exactly what I'd net and what it covers", p: 10 }
+          ]
+        },
+        {
+          text: "How comfortable are you with the idea of actually using this equity, rather than leaving it untouched?",
+          options: [
+            { t: "Very hesitant to touch it", p: 0 },
+            { t: "Open to it, but cautious", p: 3 },
+            { t: "Comfortable using it strategically", p: 6 },
+            { t: "Ready to put it to work for the next chapter", p: 10 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "competition",
+      name: "Competition",
+      short: "What else is for sale",
+      desc: "How crowded is the field you'd be selling into?",
+      questions: [
+        {
+          text: "How many similar homes — size, price range, condition — are currently for sale near you?",
+          options: [
+            { t: "A lot — it feels crowded", p: 0 },
+            { t: "A handful", p: 3 },
+            { t: "Very few", p: 6 },
+            { t: "Almost none that I'm aware of", p: 10 }
+          ]
+        },
+        {
+          text: "How does your home compare to that competition in condition and updates?",
+          options: [
+            { t: "Below average compared to what's listed", p: 0 },
+            { t: "About the same", p: 3 },
+            { t: "Better than most", p: 6 },
+            { t: "Clearly the best option in that group", p: 10 }
+          ]
+        },
+        {
+          text: "Is new construction or new inventory likely to hit your area or price point soon?",
+          options: [
+            { t: "Yes, I know of new construction or listings coming", p: 0 },
+            { t: "Possibly — not sure", p: 3 },
+            { t: "Don't think so", p: 6 },
+            { t: "No, inventory in my situation is genuinely tight", p: 10 }
+          ]
+        }
+      ]
+    }
+  ];
+
+  var TIER_NARRATIVE = {
+    location: {
+      ready: "Location is working in your favor. Homes like yours in a strong spot tend to get more attention and hold their price better.",
+      close: "Location is solid but not a standout. It won't hurt your price, but it's not likely to be the reason buyers compete for your home either.",
+      notyet: "Location is the factor most likely to limit your price. That doesn't mean you shouldn't sell — it just means we'd price around it rather than against it."
+    },
+    condition: {
+      ready: "Your home is in strong shape. Buyers pay for that — less negotiating room over inspection items, faster offers.",
+      close: "Your home is livable but shows its age in places. A few targeted updates, or a price adjustment, usually closes that gap.",
+      notyet: "There's real work to do before this home shows its best. We'd need to decide together — fix it up first, or price it as-is for the right buyer."
+    },
+    timing: {
+      ready: "Your timeline and the market are lining up. This is a good window to move forward with intention.",
+      close: "You're getting closer, but either your personal timeline or the market isn't fully dialed in yet. Worth a conversation before locking in a date.",
+      notyet: "Timing isn't there yet — for you, the market, or both. There's no rush, and rushing rarely helps."
+    },
+    equity: {
+      ready: "Your equity gives you real flexibility. You're in a strong position to make this move on your terms.",
+      close: "You likely have workable equity, but it's worth running the exact numbers before you commit to a price or a next home.",
+      notyet: "Equity is tight right now. That doesn't rule anything out, but it does mean the numbers need a closer look before you price anything."
+    },
+    competition: {
+      ready: "You'd be selling into a market with very little competing directly with you. That's leverage worth using.",
+      close: "There's some competition, but nothing that should scare you off. Positioning and pricing still matter.",
+      notyet: "You'd be one of several similar homes for sale. In that environment, pricing strategy matters more than usual."
+    }
+  };
+
+  var OVERALL_NARRATIVE = {
+    ready: "The fundamentals are lining up. If you're ready, this is a good time to have a real conversation about pricing your home with confidence.",
+    close: "You're not far off. A couple of these factors are working against you right now — worth talking through before you settle on a price or a timeline.",
+    notyet: "Several factors need attention before pricing this the right way. That's not bad news — it just means there's groundwork to do first, and no reason to rush it."
+  };
+
+  var TIER_LABEL = { ready: "Ready to Move Forward", close: "Getting Close", notyet: "Not Yet — And That's Okay" };
+
+  var answers = {}; // "factorIndex-questionIndex" -> points
+  var currentStep = 0; // 0 = intro, 1..5 = factors, 6 = results
+
+  var introGrid = document.getElementById("intro-factor-grid");
+  FACTORS.forEach(function (f) {
+    var chip = document.createElement("div");
+    chip.className = "factor-chip";
+    chip.innerHTML =
+      '<div class="icon">' + ICONS[f.id] + '</div>' +
+      '<div class="name">' + f.name + '</div>' +
+      '<div class="desc">' + f.desc + '</div>';
+    introGrid.appendChild(chip);
+  });
+
+  var mount = document.getElementById("questions-mount");
+  FACTORS.forEach(function (f, fi) {
+    var screen = document.createElement("div");
+    screen.className = "q-screen";
+    screen.id = "q-screen-" + fi;
+
+    var head = document.createElement("div");
+    head.className = "factor-head";
+    head.innerHTML =
+      '<div class="icon-badge">' + ICONS[f.id] + '</div>' +
+      '<div><div class="tag">Factor ' + (fi + 1) + ' of 5</div><h2>' + f.name + '</h2></div>';
+    screen.appendChild(head);
+
+    f.questions.forEach(function (q, qi) {
+      var block = document.createElement("div");
+      block.className = "q-block";
+      var qtext = document.createElement("div");
+      qtext.className = "q-text";
+      qtext.textContent = q.text;
+      block.appendChild(qtext);
+
+      var opts = document.createElement("div");
+      opts.className = "options";
+      q.options.forEach(function (opt, oi) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option";
+        btn.setAttribute("data-factor", fi);
+        btn.setAttribute("data-question", qi);
+        btn.setAttribute("data-points", opt.p);
+        btn.innerHTML = '<span class="dot"></span><span>' + opt.t + '</span>';
+        btn.addEventListener("click", function () {
+          var siblings = opts.querySelectorAll(".option");
+          for (var i = 0; i < siblings.length; i++) siblings[i].classList.remove("selected");
+          btn.classList.add("selected");
+          answers[fi + "-" + qi] = opt.p;
+          updateNextEnabled(fi);
+        });
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+      screen.appendChild(block);
+    });
+
+    var nav = document.createElement("div");
+    nav.className = "btn-row";
+    nav.style.marginTop = "8px";
+    var backBtn = document.createElement("button");
+    backBtn.type = "button";
+    backBtn.className = "btn btn-ghost";
+    backBtn.textContent = fi === 0 ? "Back to intro" : "Back";
+    backBtn.addEventListener("click", function () { goToStep(fi); });
+    var nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "btn btn-primary";
+    nextBtn.id = "next-btn-" + fi;
+    nextBtn.disabled = true;
+    nextBtn.textContent = fi === FACTORS.length - 1 ? "See my score" : "Next factor";
+    nextBtn.addEventListener("click", function () {
+      if (fi === FACTORS.length - 1) { showResults(); }
+      else { goToStep(fi + 2); }
+    });
+    nav.appendChild(backBtn);
+    nav.appendChild(nextBtn);
+    screen.appendChild(nav);
+
+    mount.appendChild(screen);
+  });
+
+  function updateNextEnabled(fi) {
+    var answeredCount = 0;
+    for (var qi = 0; qi < FACTORS[fi].questions.length; qi++) {
+      if (answers[fi + "-" + qi] !== undefined) answeredCount++;
+    }
+    var btn = document.getElementById("next-btn-" + fi);
+    btn.disabled = answeredCount < FACTORS[fi].questions.length;
+  }
+
+  var introScreen = document.getElementById("screen-intro");
+  var quizFlow = document.getElementById("quiz-flow");
+  var resultsScreen = document.getElementById("screen-results");
+  var progressFill = document.getElementById("progress-fill");
+  var progressText = document.getElementById("progress-text");
+  var progressName = document.getElementById("progress-name");
+
+  function goToStep(step) {
+    currentStep = step;
+    introScreen.style.display = step === 0 ? "block" : "none";
+    resultsScreen.classList.remove("active");
+    quizFlow.style.display = step >= 1 && step <= FACTORS.length ? "block" : "none";
+
+    if (step >= 1 && step <= FACTORS.length) {
+      var fi = step - 1;
+      var allScreens = mount.querySelectorAll(".q-screen");
+      for (var i = 0; i < allScreens.length; i++) allScreens[i].classList.remove("active");
+      document.getElementById("q-screen-" + fi).classList.add("active");
+      progressFill.style.width = (step / FACTORS.length) * 100 + "%";
+      progressText.textContent = "Factor " + step + " of " + FACTORS.length;
+      progressName.textContent = FACTORS[fi].name;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  document.getElementById("start-btn").addEventListener("click", function () { goToStep(1); });
+
+  function tierFor(score10) {
+    if (score10 >= 7) return "ready";
+    if (score10 >= 4) return "close";
+    return "notyet";
+  }
+  function overallTierFor(score100) {
+    if (score100 >= 71) return "ready";
+    if (score100 >= 41) return "close";
+    return "notyet";
+  }
+
+  function showResults() {
+    var factorScores = FACTORS.map(function (f, fi) {
+      var sum = 0;
+      for (var qi = 0; qi < f.questions.length; qi++) sum += (answers[fi + "-" + qi] || 0);
+      return sum / f.questions.length; // 0-10
+    });
+    var overall = Math.round((factorScores.reduce(function (a, b) { return a + b; }, 0) / factorScores.length) * 10);
+    var oTier = overallTierFor(overall);
+
+    document.getElementById("score-value").textContent = overall;
+    var pill = document.getElementById("tier-pill");
+    pill.className = "tier-pill " + oTier;
+    document.getElementById("tier-label").textContent = TIER_LABEL[oTier];
+    document.getElementById("score-narrative").textContent = OVERALL_NARRATIVE[oTier];
+
+    var rowsWrap = document.getElementById("factor-rows");
+    rowsWrap.innerHTML = "";
+    var insightsWrap = document.getElementById("insight-cards");
+    insightsWrap.innerHTML = "";
+
+    FACTORS.forEach(function (f, fi) {
+      var s10 = factorScores[fi];
+      var t = tierFor(s10);
+      var row = document.createElement("div");
+      row.className = "factor-row";
+      row.innerHTML =
+        '<div class="flabel">' + ICONS[f.id] + '<span>' + f.name + '</span></div>' +
+        '<div class="bar-track"><div class="bar-fill ' + t + '" style="width:' + (s10 / 10 * 100) + '%"></div></div>' +
+        '<div class="fscore">' + (Math.round(s10 * 10) / 10) + '</div>';
+      rowsWrap.appendChild(row);
+
+      var card = document.createElement("div");
+      card.className = "insight-card";
+      card.innerHTML =
+        '<div class="ihead">' + ICONS[f.id] + '<span class="iname">' + f.name + '</span></div>' +
+        '<p>' + TIER_NARRATIVE[f.id][t] + '</p>';
+      insightsWrap.appendChild(card);
+    });
+
+    quizFlow.style.display = "none";
+    introScreen.style.display = "none";
+    resultsScreen.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  document.getElementById("restart-btn").addEventListener("click", function () {
+    answers = {};
+    var allOptions = mount.querySelectorAll(".option.selected");
+    for (var i = 0; i < allOptions.length; i++) allOptions[i].classList.remove("selected");
+    var allNextBtns = mount.querySelectorAll('[id^="next-btn-"]');
+    for (var j = 0; j < allNextBtns.length; j++) allNextBtns[j].disabled = true;
+    resultsScreen.classList.remove("active");
+    goToStep(0);
+  });
+
+  document.getElementById("copy-btn").addEventListener("click", function () {
+    var overall = document.getElementById("score-value").textContent;
+    var tier = document.getElementById("tier-label").textContent;
+    var lines = ["My Rightsizing Readiness Score: " + overall + "/100 (" + tier + ")", ""];
+    var rows = document.querySelectorAll(".factor-row");
+    FACTORS.forEach(function (f, fi) {
+      var score = rows[fi].querySelector(".fscore").textContent;
+      lines.push(f.name + ": " + score + "/10");
+    });
+    lines.push("", "Scored using Chris Kemp's Rightsizing Readiness Score — ChrisKempRealty.com");
+    var text = lines.join("\n");
+    var btn = document.getElementById("copy-btn");
+    var original = btn.textContent;
+    function done(ok) {
+      btn.textContent = ok ? "Copied!" : "Couldn't copy";
+      setTimeout(function () { btn.textContent = original; }, 1800);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else {
+      done(false);
+    }
+  });
+
+  goToStep(0);
+})();
+</script>
